@@ -119,6 +119,29 @@ print(get_top_abs_correlations(corr_matrix, n=25))
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #####------------------------------------DESCRIPTION-------------------------------------######
 
 """
@@ -174,7 +197,8 @@ The program goes to a reliable online CSV file (hosted on GitHub) that contains 
 
 It reads that file and pulls out the stock symbols (e.g., AAPL, MSFT).
 
-Why the replace? Yahoo Finance uses a dash (-) instead of a dot (.). So BRK.B becomes BRK-B, so Yahoo can recognise it.
+Why the replace? Yahoo Finance uses a dash (-) instead of a dot (.). 
+So BRK.B becomes BRK-B, so Yahoo can recognise it.
 
 Group 3: Setting the Time Frame
 python
@@ -198,11 +222,13 @@ python
 
 tickers_subset = tickers[:100]
 dataset = yf.download(tickers_subset, start=start, end=end, auto_adjust=True, progress=False)["Close"]
-Because downloading 500 stocks all at once can be slow, the code only takes the first 100 (you can remove this limit later).
+Because downloading 500 stocks all at once can be slow, the code only takes the first 100
+(you can remove this limit later).
 
 It asks Yahoo Finance for the daily closing prices of these 100 stocks over the past year.
 
-auto_adjust=True makes sure the prices are adjusted for stock splits and dividends, so they are accurate for comparisons.
+auto_adjust=True makes sure the prices are adjusted for stock splits and dividends, 
+so they are accurate for comparisons.
 
 ----------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------
@@ -215,8 +241,10 @@ dataset = dataset.dropna(axis=1, how='all')
 stocks_returns = np.log(dataset / dataset.shift(1)).dropna()
 Cleaning: If any stock has no data at all for the whole year, it is removed.
 
-Calculating Returns: We don't care about the actual dollar price (e.g., $100 vs $200). We care about percentage change each day.
-This line calculates the daily percentage return (using a mathematical trick called "log returns") for every stock.
+Calculating Returns: We don't care about the actual dollar price (e.g., $100 vs $200). 
+We care about percentage change each day.
+This line calculates the daily percentage return (using a mathematical trick called "log returns") 
+for every stock.
 Example: If a stock went from $100 to $101, the return is +1%.
 
 ---------------------------------------------------------------------------------------
@@ -259,7 +287,8 @@ Green means positive correlation (move together).
 Red means negative correlation (move opposite).
 The darker the colour, the stronger the relationship.
 
-This helps you instantly spot which stocks are "close friends" or "enemies" just by looking at the colours.
+This helps you instantly spot which stocks are "close friends" or "enemies" 
+just by looking at the colours.
 
 ------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------
@@ -272,20 +301,30 @@ def get_redundant_pairs(df): ...
 def get_top_abs_correlations(df, n=25): ...
 print(get_top_abs_correlations(corr_matrix, n=25))
 The correlation table contains duplicates:
-Correlation(Apple, Microsoft) is the same as Correlation(Microsoft, Apple). Also, a stock correlated with itself (diagonal) is always 1, which is useless.
+Correlation(Apple, Microsoft) is the same as Correlation(Microsoft, Apple). 
+Also, a stock correlated with itself (diagonal) is always 1, which is useless.
 
 First function (get_redundant_pairs): It removes these duplicate and self-pairs to clean up the list.
 
-Second function (get_top_abs_correlations): It sorts all the remaining pairs by how strong the relationship is (ignoring whether it's positive or negative, just looking at the absolute number) and picks the top 25 strongest pairs.
+Second function (get_top_abs_correlations): 
+It sorts all the remaining pairs by how strong the relationship is 
+(ignoring whether it's positive or negative, just looking at the absolute number) 
+and picks the top 25 strongest pairs.
 
-Finally, it prints that shortlist. This is the most valuable output – it tells you exactly which two stocks have moved most similarly (or most oppositely) over the last year.
+Finally, it prints that shortlist. This is the most valuable output 
+– it tells you exactly which two stocks have moved most similarly (or most oppositely) 
+over the last year.
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 
 Summary (In One Sentence)
-This program automatically downloads the latest S&P 500 list, fetches their stock prices for the past year, calculates how closely each pair of stocks moves together, shows you a colourful heatmap, and finally prints the top 25 most tightly linked stock pairs.
+This program automatically downloads the latest S&P 500 list, 
+fetches their stock prices for the past year, 
+calculates how closely each pair of stocks moves together, 
+shows you a colourful heatmap, 
+and finally prints the top 25 most tightly linked stock pairs.
 
 
  
