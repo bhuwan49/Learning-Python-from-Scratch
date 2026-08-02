@@ -290,3 +290,7 @@ This program automatically downloads the latest S&P 500 list, fetches their stoc
 
  
 """
+
+# i am bhuwan
+print(0+6-7)
+
