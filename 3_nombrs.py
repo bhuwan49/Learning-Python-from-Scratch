@@ -10,3 +10,6 @@ else:
     smallest = min(a, b, c)
     print("Greatest number is", greatest)
     print("Smallest number is", smallest)
+    
+    print("The numbers in ascending order are:", sorted([a, b, c]))
+    
